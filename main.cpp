@@ -62,8 +62,7 @@ int main(int argc, char* argv[]) {
     if (argc > 2) {
         n = std::atoi(argv[2]);
     }
-    // seed random number generator
-    // srand(0);
+
 
     const vec x = { 0.0, 0.0, deg2rad(45.0) };
 
