@@ -65,10 +65,8 @@ int main(int argc, char* argv[]) {
     // seed random number generator
     // srand(0);
 
-    vec x(3);
-    x[0] = 0.0;
-    x[1] = 0.0;
-    x[2] = deg2rad(45.0);
+    const vec x = { 0.0, 0.0, deg2rad(45.0) };
+
 
     constexpr parafoil_state para = { 300.0, 10.0, 25.0 };
 

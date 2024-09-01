@@ -21,7 +21,7 @@ state_input_wind ode45_step(const double t, const double dt, const vec &x, const
     return {x_plus_dt, ut, pt};
 }
 
-bool end_step(double t, double tf, double dt) {
+bool not_reach_end(const double t, const double tf, const double dt) {
     return (t < tf && dt > 0) || (t > tf && dt < 0);
 }
 
@@ -32,11 +32,12 @@ dynamic_trajectory ode45(const double t0, const double tf, const double dt, cons
     dynamic_trajectory this_trajectory;
     this_trajectory[t] = {x, u(t), p(t)};
 
-    while (end_step(t, tf, dt)) {
-        const auto dt_ = std::copysign(std::min(std::abs(dt), std::abs(tf - t)), dt);
-        t += dt_;
-        auto x_plus_dt = ode45_step(t, dt_, x, u, p, para);
+    while (not_reach_end(t, tf, dt)) {
+        const auto dt_modified = std::copysign(std::min(std::abs(dt), std::abs(tf - t)), dt);
+        t += dt_modified;
+        auto x_plus_dt = ode45_step(t, dt_modified, x, u, p, para);
         this_trajectory[t] = x_plus_dt;
+        // Update x
         x = std::get<0>(x_plus_dt);
     }
 
