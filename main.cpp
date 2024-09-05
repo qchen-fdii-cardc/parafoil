@@ -6,12 +6,8 @@
 import parafoil;
 
 
-double next_double(const double ub = 1.0, const double lb = 0.0) {
-    const double ratio = 1.0 * rand() / RAND_MAX;
-    return lb + (ub - lb) * ratio;
-}
-double rad2deg(const double rad) { return rad * 180.0 / 3.1415926; };
-double deg2rad(const double deg) { return deg * 3.1415926 / 180.0; };
+
+
 
 auto make_random_control(const double bound) {
     return [bound](double t) -> vec {return { next_double(bound, 0.0) }; };
