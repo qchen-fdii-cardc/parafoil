@@ -53,3 +53,13 @@ There should be normalizations for $x, y$, and vecolity residuals, to make the c
 
 
 ## Discretization and dynamic programming
+
+When starting state and ending state are defined, the problem can be discretized and solved by dynamic programming. The state space is defined as
+
+$$
+\begin{aligned}
+& \mathcal{X} = \{x, y, \omega\} \\
+& \mathcal{t} = \{t\}
+\end{aligned}
+$$
+

@@ -33,3 +33,9 @@ parafoil_flight_state transfer(const parafoil_state& para, const double u, const
     return {t, x};
 }
 
+// 代价函数?
+
+
+
+// dp算法?
+
