@@ -1,34 +1,55 @@
-## 动态规划
+## Parafoil problem
 
-对于每个时间点，有四个可能的决策：
+To fly a well designed parafoil requires good understanding of its dynamics. 
 
-1. 向左打满，也就是 $\dot{\omega} = -\omega_{\max}$
-2. 向右打满，也就是 $\dot{\omega} = \omega_{\max}$
-3. 维持方向不变，也就是 $\dot{\omega} = 0$
-4. 取一个介于 $-\omega_{\max}$ 和 $\omega_{\max}$ 之间的值
+We start with the following assumptions:
 
-如果仅仅考虑前三种情况，那么这个问题就是一个动态规划问题。
+1. The parafoil is a point mass;
+2. Gravity is perfectly balanced by the lift force;
+3. The parafoil is steered by changing the heading angle of the parafoil;
+4. Wind remains constant at this early stage;
+5. x-y plane is the horizontal plane, z is the vertical direction;
+6. x is opposite to the direction of the wind, y is perpendicular to the wind direction;
+7. Target is at (0,0,0) for (x, y, z) coordinates;
+8. The touch down point relative velocity to the ground should be minimized.
 
-目标状态：
+
+## Parafoil dynamics
+
+$$\left\{
+\begin{aligned}
+\dot{x} &= V_x = V \cos(\omega) - V_w\\
+\dot{y} &= V_y = V \sin(\omega) \\
+\dot{\omega} &= u
+\end{aligned}\right.
+$$
+
+Flight time is determined by initial height and vertical velocity,
+
+$$
+T = \frac{H}{V_z}
+$$
+
+## Optimal control
+
+The optimal control problem is to minimize the touch down point relative velocity to the ground. The cost function is defined as
 
 $$
 \begin{aligned}
-x = 0 \\
-y = 0 \\
-\omega = -180^\circ
-\end{aligned}
+& \arg\min_u & \sqrt{V_x(T)^2 + V_y(T)^2} \\
+& \text{s.t.} \\
+& & |x(T)|^2 + |y(T)|^2  = 0
+ \end{aligned}
 $$
 
-### 动态规划问题的一般解法
+Or equivalently, even more realistically,
 
-1. 确定状态变量
-2. 确定状态变量的取值范围
-3. 确定决策变量
-4. 确定决策变量的取值范围
-5. 确定状态转移方程
-6. 确定边界条件
-7. 确定目标状态
-8. 确定目标函数
-9. 确定约束条件
-10. 确定求解方法
+$$
+J = \arg\min_u |x(T)|^2 + |y(T)|^2 + \sqrt{V_x(T)^2 + V_y(T)^2 + V_z(T)^2}
 
+$$
+
+There should be normalizations for $x, y$, and vecolity residuals, to make the cost function dimensionless.
+
+
+## Discretization and dynamic programming
