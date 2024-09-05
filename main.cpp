@@ -44,7 +44,7 @@ auto maximum_op_collocation(const double bound, const int n) {
 }
 
 
-int main(int argc, char* argv[]) {
+int flight_from_command_line_arguments(int argc, char* argv[], double dt) {
 
     // parse a seed from command line
     if (argc > 1) {
@@ -81,7 +81,7 @@ int main(int argc, char* argv[]) {
     // measure time
     const auto start = std::chrono::high_resolution_clock::now();
 
-    auto trajectory = ode45(para.T(), 0.0, -0.01, x, u, wind, para);
+    auto trajectory = ode45(para.T(), 0.0, dt, x, u, wind, para);
 
     const auto end = std::chrono::high_resolution_clock::now();
 
@@ -93,6 +93,49 @@ int main(int argc, char* argv[]) {
                 t, para.h(t), x[0], x[1], rad2deg(x[2]), rad2deg(u[0]), p[0], p[1]);
     }
 
-    // std::cout << "Elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms\n";
+    std::cout << "Elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms\n";
 
+    return 0;
+}
+
+int transfer(int argc, char* argv[], int section_count = 10) {
+    // return flight_from_command_line_arguments(argc, argv);
+
+    constexpr parafoil_state para = { 300.0, 10.0, 25.0 };    
+
+    const vec x = { 0.0, 0.0, deg2rad(0.0) };
+    const parafoil_flight_state flight_state = {para.T(), x};
+    constexpr auto Vw = 1.0;
+    // const double u = deg2rad(25.0);
+    const double Dt = - para.T() / section_count;
+
+    const vec possible_u = {deg2rad(25.0), -deg2rad(25.0), 0};
+
+    auto fs = flight_state;
+    std::cout.precision(4);
+    std::cout.setf(std::ios::fixed);
+    while (true) {
+        auto [t1, x1] = fs;
+        std::cout << t1 << ", " << x1 << "--->";
+        // random select u from possible_u
+        auto u = possible_u[rand() % possible_u.size()];
+        std::cout << "u: " << u << std::endl;
+        if (t1 <= 0.0) {
+            break;
+        }
+        fs = transfer(para, u, Vw, Dt, fs);
+    }
+
+    // auto ret = transfer(para, u, Vw, Dt, flight_state);
+    // auto [t1, x1] = ret;
+
+    // std::cout vector
+    return 0;
+}
+
+int main(int argc, char* argv[]) {
+    // return flight_from_command_line_arguments(argc, argv, -0.7);
+    // random seed with system time
+    srand(std::chrono::system_clock::now().time_since_epoch().count());
+    return transfer(argc, argv, 50);
 }

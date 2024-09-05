@@ -2,7 +2,7 @@
 module;
 #include <utility>
 #include <valarray>
-
+#include <iostream>
 
 module parafoil;
 
@@ -37,7 +37,6 @@ dynamic_trajectory ode45(const double t0, const double tf, const double dt, cons
         t += dt_modified;
         auto x_plus_dt = ode45_step(t, dt_modified, x, u, p, para);
         this_trajectory[t] = x_plus_dt;
-        // Update x
         x = std::get<0>(x_plus_dt);
     }
 
