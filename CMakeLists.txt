@@ -21,7 +21,6 @@ IF (WIN32)
 ENDIF()
 
 add_executable(parafoil)
-
 target_sources(parafoil
         PRIVATE
             main.cpp dynamics.cpp ode45.cpp dynamicprogramming.cpp
