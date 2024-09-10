@@ -31,15 +31,14 @@ We start with the following assumptions:
 
 ## Parafoil dynamics
 
-$$
-\left\{
-\begin{aligned}
-\dot{x} &= V_x = V \cos(\omega) - V_w\\
-\dot{y} &= V_y = V \sin(\omega) \\
-\dot{\omega} &= u
-\end{aligned}\right.
-$$
 
+$$
+\begin{cases}   
+    \dot{x} &= V_x = V \cos(\omega) - V_w\\
+    \dot{y} &= V_y = V \sin(\omega) \\
+    \dot{\omega} &= u \\
+\end{cases}
+$$
 
 
 Flight time is determined by initial height and vertical velocity,
@@ -198,10 +197,11 @@ $$
 这里只需要产生一个控制函数
 
 $$
-u(t_1, u_{t_1}, t_3, u_{t_3}) = t \mapsto \begin{cases}
-u_{t_1} & t \in (T-t_1, T] \\
-0 & t \in [t_3, T-t_1] \\
-u_{t_3} & t \in [0, t_3)
+u(t_1, u_{t_1}, t_3, u_{t_3}) = 
+t \mapsto \begin{cases}
+    u_{t_1} & t \in (T-t_1, T] \\
+    0 & t \in [t_3, T-t_1] \\
+    u_{t_3} & t \in [0, t_3)
 \end{cases}
 $$
 
