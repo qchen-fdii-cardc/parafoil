@@ -11,6 +11,8 @@
 </head>
 
 
+[Documentation](https://xm.sc.cn/)
+
 ## Parafoil problem
 
 To fly a well designed parafoil requires good understanding of its dynamics. 
@@ -286,11 +288,13 @@ $$
 \phi = (\tilde{\mathbb{x}}_f - \mathbb{x}_f)^\mathtt{T} \mathbf{P} (\tilde{\mathbb{x}}_f - \mathbb{x}_f)
 $$
 
+代价函数的定义为:
+
 $$
 J = (\tilde{\mathbb{x}}_f - \mathbb{x}_f)^\mathtt{T} \mathbf{P} (\tilde{\mathbb{x}}_f - \mathbb{x}_f) + \mathbb{u}^\mathtt{T} \mathbf{R} \mathbb{u}
 $$
 
-定义一个从当前位置到目标位置的最小cost函数:
+定义一个从当前位置到目标位置的最小代价函数:
 
 $$
 V(\mathbb{x}, t) = \min_{\mathbb{u}(t)}\left\{ \phi\left[
