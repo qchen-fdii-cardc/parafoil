@@ -238,3 +238,49 @@ $$
 
 这个问题的求解相对来说就容易多了?
 
+## [1] BONACCORSI G, QUADRELLI M B, BRAGHIN F. Dynamic Programming and Model Predictive Control Approach for Autonomous Landings[J]. Journal of Guidance, Control, and Dynamics, 2022, 45(11): 2164-2173. DOI:10.2514/1.G006667.
+
+我们先来好好看看这个文献中的动态规划是怎么做的.
+
+首先是动力学方程, 同样采用简化的三自由度模型, 边界条件和目标函数的定义:
+
+$$
+J= \phi\left[
+    \mathbb{x}(t_f), t_f
+\right]
++ \int_{t_0}^{t_f} L\left[
+    \mathbb{x}(t), \phi_a(t), t\right] dt
+$$
+
+目标函数有两个部分组成, 一个部分是最终点, 一个部分是关于整个轨迹的积分.
+
+边界条件是:
+
+$$
+\mathbb{x}(t_0) = \mathbb{x}_0, \mathbb{x}(t_f) = \mathbb{x}_f
+$$
+
+文章采用二次方来定义:
+
+$$
+\phi = (\tilde{\mathbb{x}}_f - \mathbb{x}_f)^\mathtt{T} \mathbf{P} (\tilde{\mathbb{x}}_f - \mathbb{x}_f)
+$$
+
+$$
+J = (\tilde{\mathbb{x}}_f - \mathbb{x}_f)^\mathtt{T} \mathbf{P} (\tilde{\mathbb{x}}_f - \mathbb{x}_f) + \mathbb{u}^\mathtt{T} \mathbf{R} \mathbb{u}
+$$
+
+定义一个从当前位置到目标位置的最小cost函数:
+
+$$
+V(\mathbb{x}, t) = \min_{\mathbb{u}(t)}\left\{ \phi\left[
+    \mathbb{x}(t_f), t_f
+\right]
++ \int_{t}^{t_f} L\left[
+    \mathbb{x}(t), \phi_a(t), t\right] dt
+    \right\}
+$$
+
+将时间$[0, t_f]$离散为$t_k = t_0 + k \Delta t$, $k=0,1,\cdots,K$, 并且 $k\Delta t = t_f - t_0$.
+
+还应用网格精细化技术, 首先利用较粗的网格进行优化, 然后在局部进行网格细化.

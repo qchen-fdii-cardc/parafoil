@@ -37,11 +37,11 @@ target_sources(de_demo
             FILE_SET CXX_MODULES
             FILES parafoil.ixx)
 
-add_executable(nsga2_demo)
+# add_executable(nsga2_demo)
 
-target_sources(nsga2_demo
-		PRIVATE
-			nsgii.cpp dynamics.cpp ode45.cpp dynamicprogramming.cpp
-		PUBLIC
-			FILE_SET CXX_MODULES
-			FILES parafoil.ixx)
+# target_sources(nsga2_demo
+# 		PRIVATE
+# 			nsgii.cpp dynamics.cpp ode45.cpp dynamicprogramming.cpp
+# 		PUBLIC
+# 			FILE_SET CXX_MODULES
+# 			FILES parafoil.ixx)
