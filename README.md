@@ -59,10 +59,13 @@ $$
 & & |x(T)|^2 + |y(T)|^2  = 0
  \end{aligned}
 $$
+
 Or equivalently, even more realistically,
+
 $$
 J = \arg\min_u |x(T)|^2 + |y(T)|^2 + \sqrt{V_x(T)^2 + V_y(T)^2 + V_z(T)^2}
 $$
+
 There should be normalizations for $x, y$, and vecolity residuals, to make the cost function dimensionless.
 
 
