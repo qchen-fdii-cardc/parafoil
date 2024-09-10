@@ -16,7 +16,8 @@ We start with the following assumptions:
 
 ## Parafoil dynamics
 
-$$\left\{
+$$
+\left\{
 \begin{aligned}
 \dot{x} &= V_x = V \cos(\omega) - V_w\\
 \dot{y} &= V_y = V \sin(\omega) \\
@@ -24,7 +25,11 @@ $$\left\{
 \end{aligned}\right.
 $$
 
+
+
 Flight time is determined by initial height and vertical velocity,
+
+
 
 $$
 T = \frac{H}{V_z}
@@ -41,21 +46,16 @@ $$
 & & |x(T)|^2 + |y(T)|^2  = 0
  \end{aligned}
 $$
-
 Or equivalently, even more realistically,
-
 $$
 J = \arg\min_u |x(T)|^2 + |y(T)|^2 + \sqrt{V_x(T)^2 + V_y(T)^2 + V_z(T)^2}
-
 $$
-
 There should be normalizations for $x, y$, and vecolity residuals, to make the cost function dimensionless.
 
 
 ## Discretization and dynamic programming
 
 When starting state and ending state are defined, the problem can be discretized and solved by dynamic programming. The state space is defined as
-
 $$
 \begin{aligned}
 & \mathcal{X} = \{x, y, \omega\} \\
@@ -63,7 +63,8 @@ $$
 \end{aligned}
 $$
 
-    接下来的开发可能会有一点点破坏性,所以新开一个分支来弄,不影响主分支的内容.
+
+> 接下来的开发可能会有一点点破坏性,所以新开一个分支来弄,不影响主分支的内容.
 
 
 从目前阅读的内容看,DP主要的核心是把已经处理过的子问题的解存储起来,然后在需要的时候直接调用,而不是重新计算?
@@ -93,7 +94,7 @@ A*算法是一种启发式搜索算法,在搜索的时候,会根据当前的状�
 2. 着陆点的速度为 $V_x(T) = V \cos\omega(T) - V_w$, $V_y(T) = V \sin\omega(T)$.
 3. 翼伞最大飞行距离为 $V \cdot T$, 这个会和风速一起确定能够达到着陆点的起始范围, 这个问题本身就有一点点意思.
 4. 这个起始范围的不确定性也是相对容易解决的. 
-5. 由 $\bar{u}$ 的存在, 翼伞的最小转弯半径也是有限的, 转弯半径 $r(t)=\frac{V}{\dot{\omega}}$的最小值为$\underbar{r} = V/\bar{u}$.
+5. 由 $\bar{u}$ 的存在, 翼伞的最小转弯半径也是有限的, 转弯半径 $r(t)=\frac{V}{\dot{\omega}}$的最小值为$\underset{\bar{}}{r} = V/\bar{u}$.
 6. 这样,上面的可行集合就可以看作是一个几何问题.
 
 ### 可行集合的分析
@@ -106,13 +107,15 @@ $$
 
 这是以 $(-V_w T, 0)$ 为圆心, $H \cdot \frac{V}{V_z}$ 为半径的圆. 在圆上的任何一点, 初始方位角必须为:
 
- $$\omega_0 = \arctan\frac{y_0}{x_0-V_w T}$$
+$$
+ \omega_0 = \arctan\frac{y_0}{x_0-V_w T}
+$$
 
 ![可行集合](./imgs/parafoil-flight-dynamics.png)
 
  因此, 在考虑问题解的表格并试图进行轨迹规划问题综合时, 初始的可行集合为这个圆的内点. 我们还可以进一步求出每个内点对应的 $\omega_0$的允许范围, 通过求解最小转弯半径相关的几何问题.
 
-这个集合问题的实质就是,一条由最小半径为 $\underbar{r}$ 的圆弧和直线线段组成的曲线, 连接 $(x_0, y_0)$ 和原点, 这个曲线的长度是 $V \cdot T$.
+这个集合问题的实质就是,一条由最小半径为 $\underset{\bar{}}{r}$ 的圆弧和直线线段组成的曲线, 连接 $(x_0, y_0)$ 和原点, 这个曲线的长度是 $V \cdot T$.
 
 这个曲线起点的切线, 由 $\omega_0$确定.
 
@@ -157,7 +160,8 @@ $$
 
 还有一个条件,就是 $0 \le t_1, t_3 < \frac{2\pi}{\bar{u}}$, 也就是周期性条件, 在当地转不超过一圈.
 
-$$\begin{aligned}
+$$
+\begin{aligned}
 &\omega_1=\pm\bar{u}t_1 \\
 &\omega_0=\omega_1 \pm\bar{u}t_3
 \end{aligned}
