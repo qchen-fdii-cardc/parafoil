@@ -238,3 +238,81 @@ $$
 
 这个问题的求解相对来说就容易多了?
 
+
+
+## 再次考虑动态规划
+
+这个问题按照动态规划的思路来表达.
+
+对于一个给定的起点 $x_0, y_0, \omega_0$, 寻找 $u(t), t\in[0, T]$ 使得
+
+$$
+[x(T), y(T), \omega(T)]^\mathtt{T} = \mathbf{0}
+$$
+
+这个问题可以看作是一个动态规划问题, 从终点开始, 逆向求解.
+
+问题变为, 对于一个给定的终点 $x(T), y(T), \omega(T)$, 寻找 $u(t), t\in[0, T-\Delta T]$, 使得
+
+$$
+[x(T-\Delta T), y(T-\Delta T), \omega(T-\Delta T)]^\mathtt{T} = \mathcal{S}_{T-\Delta T}  \xleftarrow{u(t), t\in[T-\Delta T, T]} \mathcal{S} \equiv \mathbf{0}
+$$
+
+这里, 根据$u(t), t\in [T-\Delta T, T]$的选择, 可以得到一个新的状态 $\mathcal{S}_{T-\Delta T}$, 这个状态是一个集合, 也就是说, 从这个状态出发, 可以到达$\mathbf{0}$.
+
+原来的问题, 就变成:
+
+$$
+\mathcal{S}_0 \xmapsto{u(t), t\in[0, \Delta T]} \mathcal{S}_{\Delta T} \xmapsto{u(t), t\in[\Delta T, 2\Delta T]} \cdots \xmapsto{u(t), t\in[T-\Delta T, T]} \mathcal{S}_T
+$$
+
+按照这个思路, 按照$\Delta T$来逐步对状态空间进行搜索, 并且把所有的中间解都存储起来.
+
+状态的转换由前面实现的状态转换函数来实现. 如果我们把问题简化到控制变量只会取$0, -\bar{u}, \bar{u}$三种情况, 则最终是在如下的状态转移图中进行搜索.
+
+```mermaid
+stateDiagram
+[*] --> S0
+S0 --> S11 : $$ \mathbf{0}_{[0, \Delta T]}$$
+S0 --> S12 : $$-\bar{u}_{[0, \Delta T]}$$
+S0 --> S13 : $$\bar{u}_{[0, \Delta T]}$$
+
+S11 --> S211 : $$ \mathbf{0}_{[\Delta T, 2\Delta T]}$$
+S11 --> S212 : $$-\bar{u}_{[\Delta T, 2\Delta T]}$$
+S11 --> S213 : $$\bar{u}_{[\Delta T, 2\Delta T]}$$
+
+S12 --> S221 : $$ \mathbf{0}_{[\Delta T, 2\Delta T]}$$
+S12 --> S222 : $$-\bar{u}_{[\Delta T, 2\Delta T]}$$
+S12 --> S223 : $$\bar{u}_{[\Delta T, 2\Delta T]}$$
+
+S13 --> S231 : $$ \mathbf{0}_{[\Delta T, 2\Delta T]}$$
+S13 --> S232 : $$-\bar{u}_{[\Delta T, 2\Delta T]}$$
+S13 --> S233 : $$\bar{u}_{[\Delta T, 2\Delta T]}$$
+
+S222 --> ...
+... --> S92
+
+S91 --> S10 : $$ 0_{[T-\Delta T, T]}$$
+S92 --> S10 : $$-\bar{u}_{[T-\Delta T, T]}$$
+S93 --> S10 : $$\bar{u}_{[T-\Delta T, T]}$$
+S10 --> [*]
+```
+
+大概分析一下全图搜索的复杂度, 从两头往中间搜索, 一共是 $N= \frac{T}{\Delta T}$ 个节点, 一共是 $2\cdot 3 ^{N/2}$. 
+
+这里会有两个问题, 第一个问题的复杂度太高, 第二个是, 这是一个打靶问题, 打靶本身就是一个我问题. 
+
+搜索的时候,两边往中间凑? 还是从怎么凑?
+
+搜索的方法:
+
+1. 宽度优先搜索
+2. 深度优先搜索
+3. A*搜索
+
+所以, 这里还有一个$\Delta T$的逐步减小的问题.
+
+
+
+
+
