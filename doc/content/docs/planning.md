@@ -1,6 +1,6 @@
 ---
 title: "路径规划"
-weight: 3
+weight: 31
 # bookFlatSection: false
 # bookToc: true
 # bookHidden: false

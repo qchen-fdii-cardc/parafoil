@@ -1,6 +1,6 @@
 ---
 title: "系统构成"
-weight: 3
+weight: 12
 # bookFlatSection: false
 # bookToc: true
 # bookHidden: false
