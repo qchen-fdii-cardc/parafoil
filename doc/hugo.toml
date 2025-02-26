@@ -1,6 +1,6 @@
 baseURL = 'https://xm.sc.cn/'
 languageCode = 'en-us'
-title = 'Parafoil dynamics'
+title = 'Parafoil Research Library'
 theme = 'hugo-book'
 
 # Book configuration
