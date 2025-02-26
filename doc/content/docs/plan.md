@@ -1,22 +1,14 @@
-<head>
-    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-    <script type="text/x-mathjax-config">
-        MathJax.Hub.Config({
-            tex2jax: {
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
-            inlineMath: [['$', '$'], ['\\(', '\\)']]
-            }
-        });
-    </script>
-
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true });
-  </script>
-</head>
-
-
-[Documentation](https://xm.sc.cn/)
+---
+title: "路径规划"
+weight: 3
+# bookFlatSection: false
+# bookToc: true
+# bookHidden: false
+# bookCollapseSection: false
+# bookComments: false
+# bookSearchExclude: false
+---
+# Planning
 
 ## Parafoil problem
 
@@ -133,7 +125,7 @@ $$
  \omega_0 = \arctan\frac{y_0}{x_0-V_w T}
 $$
 
-![可行集合](./imgs/parafoil-flight-dynamics.png)
+![可行集合](/imgs/parafoil-flight-dynamics.png)
 
  因此, 在考虑问题解的表格并试图进行轨迹规划问题综合时, 初始的可行集合为这个圆的内点. 我们还可以进一步求出每个内点对应的 $\omega_0$的允许范围, 通过求解最小转弯半径相关的几何问题.
 
@@ -145,7 +137,7 @@ $$
 
 从某个点 $(x,y, \omega)$出发,可能到处两段圆弧,分别想两个方向, 对应于控制变量的 $\pm\bar{u}$, 在保持控制变量不变 $t$时间之后, 到达新的点 $(x', y', \omega')$, 这个过程可以看作是一个切线问题.
 
-![Flight Path](./imgs/flightpath.png)
+![Flight Path](/imgs/flightpath.png)
 
 根据类似的几何分析,可以在 $(x,y,\omega)$构成的三维空间中,确定一个可行集合.
 
@@ -216,13 +208,13 @@ $$
 
 按照目前的程序, 能够分析出通过一个"转弯-直飞-转弯"序列达到目标点的可能起点状态, 这里要求的是逆风着陆.
 
-![](./imgs/fancy.png)
+![](/imgs/fancy.png)
 
 这是在风速 $1m/s$固定的情况下, 所有能够达到逆风着陆原点的起点的散点图.
 
 如果把初始的 $\omega_0$作为 $z$坐标, 则由更意义的三维图像.
 
-![](./imgs/fancy3d.png)
+![](/imgs/fancy3d.png)
 
 ### 下一步
 可以编译出多个可执行文件,通过参数来产生结果, 然后在Matlab中执行数值实验,对这个问题进行研究.
@@ -246,7 +238,7 @@ $$
 那么, 控制变量取任意值的情况下, 这个可达的集合是不是有所变化呢?
 
 
-![final-turn](./imgs/final-turn.png)
+![final-turn](/imgs/final-turn.png)
 
 
 ## 可达性
@@ -343,7 +335,7 @@ S10 --> [*]
 
 
 
-## [1] BONACCORSI G, QUADRELLI M B, BRAGHIN F. Dynamic Programming and Model Predictive Control Approach for Autonomous Landings[J]. Journal of Guidance, Control, and Dynamics, 2022, 45(11): 2164-2173. DOI:10.2514/1.G006667.
+[^1] BONACCORSI G, QUADRELLI M B, BRAGHIN F. Dynamic Programming and Model Predictive Control Approach for Autonomous Landings[J]. Journal of Guidance, Control, and Dynamics, 2022, 45(11): 2164-2173. DOI:10.2514/1.G006667.
 
 我们先来好好看看这个文献中的动态规划是怎么做的.
 
@@ -352,8 +344,7 @@ S10 --> [*]
 $$
 J= \phi\left[
     \mathbb{x}(t_f), t_f
-\right]
-+ \int_{t_0}^{t_f} L\left[
+\right] + \int_{t_0}^{t_f} L\left[
     \mathbb{x}(t), \phi_a(t), t\right] dt
 $$
 
@@ -382,8 +373,7 @@ $$
 $$
 V(\mathbb{x}, t) = \min_{\mathbb{u}(t)}\left\{ \phi\left[
     \mathbb{x}(t_f), t_f
-\right]
-+ \int_{t}^{t_f} L\left[
+\right] + \int_{t}^{t_f} L\left[
     \mathbb{x}(t), \phi_a(t), t\right] dt
     \right\}
 $$

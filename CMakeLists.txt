@@ -1,9 +1,16 @@
-cmake_minimum_required(VERSION 3.30)
+cmake_minimum_required(VERSION 3.20)
 project(parafoil)
 
 set(CMAKE_CXX_STANDARD 20)
-
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+# Create directories for source and include files
+set(PROJECT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
+set(PROJECT_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+# Create the directories if they don't exist
+file(MAKE_DIRECTORY ${PROJECT_SOURCE_DIR})
+file(MAKE_DIRECTORY ${PROJECT_INCLUDE_DIR})
 
 # using multiple cores for compilation
 ######################使用多处理器编译########################
@@ -20,28 +27,42 @@ IF (WIN32)
 		ENDIF(MSVC)
 ENDIF()
 
+# Add include directories
+include_directories(${PROJECT_INCLUDE_DIR})
+
+# Define source files
+set(COMMON_SOURCES
+    ${PROJECT_SOURCE_DIR}/dynamics.cpp
+    ${PROJECT_SOURCE_DIR}/ode45.cpp
+    ${PROJECT_SOURCE_DIR}/dynamicprogramming.cpp
+    ${PROJECT_SOURCE_DIR}/parafoil.cpp
+)
+
+# Define header files
+set(COMMON_HEADERS
+    ${PROJECT_INCLUDE_DIR}/parafoil.hpp
+)
+
+# Parafoil executable
 add_executable(parafoil)
 target_sources(parafoil
         PRIVATE
-            main.cpp dynamics.cpp ode45.cpp dynamicprogramming.cpp
-        PUBLIC
-            FILE_SET CXX_MODULES
-            FILES parafoil.ixx)
+            ${PROJECT_SOURCE_DIR}/main.cpp
+            ${COMMON_SOURCES}
+)
 
+# DE demo executable
 add_executable(de_demo)
-
 target_sources(de_demo
         PRIVATE
-            de.cpp dynamics.cpp ode45.cpp dynamicprogramming.cpp
-        PUBLIC
-            FILE_SET CXX_MODULES
-            FILES parafoil.ixx)
+            ${PROJECT_SOURCE_DIR}/de.cpp
+            ${COMMON_SOURCES}
+)
 
+# NSGA2 demo executable (commented out)
 # add_executable(nsga2_demo)
-
 # target_sources(nsga2_demo
 # 		PRIVATE
-# 			nsgii.cpp dynamics.cpp ode45.cpp dynamicprogramming.cpp
-# 		PUBLIC
-# 			FILE_SET CXX_MODULES
-# 			FILES parafoil.ixx)
+# 			${PROJECT_SOURCE_DIR}/nsgii.cpp
+# 			${COMMON_SOURCES}
+# )

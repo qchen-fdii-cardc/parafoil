@@ -1,4 +1,6 @@
-module;
+#include "dynamicprogramming.hpp"
+#include "dynamics.hpp"
+#include "ode45.hpp"
 #include <functional>
 #include <utility>
 #include <valarray>
@@ -8,8 +10,8 @@ module;
 #include <algorithm>
 #include <iostream>
 
+namespace parafoil {
 
-module parafoil;
 // asumming x-y is a wind axis, 
 // x -> wind speed in -x direction
 // p = [-Vw, 0]
@@ -22,13 +24,11 @@ parafoil_flight_state transfer(const parafoil_state& para, const double u, const
     auto u_func = [u](double t) -> vec { return { u }; };
     auto wind_func = [Vw](double t) -> vec { return { -Vw, 0.0 }; };
     auto [t0, x0] = state_input;    
-        auto t = t0 + dt;
+    auto t = t0 + dt;
 
     // integrate state vector with ode45
     auto integrate_dt = std::copysign(std::min(std::abs(dt) / 10, 1e-3), dt);
     auto traj = ode45(t0, t, integrate_dt, x0, u_func, wind_func, para);
-    // get the last state vector
-    // auto [x, uu, pp] = traj[t];
     auto x = std::get<0>(traj[t]);
     return {t, x};
 }
@@ -38,4 +38,6 @@ parafoil_flight_state transfer(const parafoil_state& para, const double u, const
 
 
 // dp算法?
+
+} // namespace parafoil
 

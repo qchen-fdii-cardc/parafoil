@@ -1,11 +1,13 @@
 //
 // Created by dingd on 2024/9/1.
 //
-module;
+#include "dynamics.hpp"
 #include <cassert>
 #include <cstdlib>
-module parafoil;
+#include <cmath>
+#include <vector>
 
+namespace parafoil {
 
 double parafoil_state::T() const { return h0 / vz; }
 
@@ -36,3 +38,5 @@ vec parafoil_simple_ode(const double t, const vec &x, const vec &u, const vec &p
 
     return dx;
 }
+
+} // namespace parafoil

@@ -1,22 +1,22 @@
-
-module;
+#include "ode45.hpp"
+#include "dynamics.hpp"
+#include "math_util.hpp"
 #include <utility>
 #include <valarray>
 #include <iostream>
 
-module parafoil;
+namespace parafoil {
 
 state_input_wind ode45_step(const double t, const double dt, const vec &x, const time_point_func u,
                             const time_point_func p, const parafoil_state &para) {
-    auto n = x.size();
     vec ut = u(t);
     vec pt = p(t);
     const auto k1 = parafoil_simple_ode(t, x, u(t), p(t), para);
-    const auto k2 = parafoil_simple_ode(t + dt / 2, x + dt / 2 * k1, u(t + dt / 2), p(t + dt / 2), para);
-    const auto k3 = parafoil_simple_ode(t + dt / 2, x + dt / 2 * k2, u(t + dt / 2), p(t + dt / 2), para);
+    const auto k2 = parafoil_simple_ode(t + dt/2, x + (dt/2) * k1, u(t + dt/2), p(t + dt/2), para);
+    const auto k3 = parafoil_simple_ode(t + dt/2, x + (dt/2) * k2, u(t + dt/2), p(t + dt/2), para);
     const auto k4 = parafoil_simple_ode(t + dt, x + dt * k3, u(t + dt), p(t + dt), para);
 
-    vec x_plus_dt = x + dt / 6 * (k1 + 2 * k2 + 2 * k3 + k4);
+    vec x_plus_dt = x + (dt/6) * (k1 + k2 + k2 + k3 + k3 + k4);
 
     return {x_plus_dt, ut, pt};
 }
@@ -42,3 +42,5 @@ dynamic_trajectory ode45(const double t0, const double tf, const double dt, cons
 
     return this_trajectory;
 }
+
+} // namespace parafoil
