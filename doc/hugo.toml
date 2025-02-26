@@ -4,16 +4,20 @@ title = 'Parafoil dynamics'
 theme = 'hugo-book'
 
 # Book configuration
-disablePathToLower = true
+disablePathToLower = false
 enableGitInfo = true
+
+[params]
+  gitsite = 'https://github.com/qchen-fdii-cardc/parafoil/'
 
 # Needed for mermaid/katex shortcodes
 [markup]
-  [markup.tableOfContents]
-    endLevel = 2
-    startLevel = 2
-    ordered = true
   [markup.goldmark]
+    [markup.goldmark.parser]
+        [markup.goldmark.parser.attribute]
+        block = true
+        title = true
+
     [markup.goldmark.renderer]
       unsafe = true
     [markup.goldmark.extensions]
