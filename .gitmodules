@@ -1,0 +1,3 @@
+[submodule "doc/themes/hugo-book"]
+	path = doc/themes/hugo-book
+	url = git@github.com:qchen-fdii-cardc/hugo-book.git

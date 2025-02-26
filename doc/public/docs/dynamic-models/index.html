@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en-us" dir=" ltr">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="
+  飞行动力学模型
+  #
+
+
+  动力学模型的阶次
+  #
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="http://localhost:1313/docs/dynamic-models/">
+  <meta property="og:site_name" content="Parafoil dynamics">
+  <meta property="og:title" content="飞行动力学模型">
+  <meta property="og:description" content="飞行动力学模型 # 动力学模型的阶次 #">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+<title>飞行动力学模型 | Parafoil dynamics</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="http://localhost:1313/docs/dynamic-models/">
+<link rel="stylesheet" href="/book.min.3c574e738a66df68908d4670f34608b73e70d0ebe64eefdbbea594f6e2a1064b.css" integrity="sha256-PFdOc4pm32iQjUZw80YItz5w0OvmTu/bvqWU9uKhBks=" crossorigin="anonymous">
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/en.search.min.ecc8fe36657af298391ffb97fcc899df51ce3cae62330305550779583041544a.js" integrity="sha256-7Mj&#43;NmV68pg5H/uX/MiZ31HOPK5iMwMFVQd5WDBBVEo=" crossorigin="anonymous"></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+    integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"
+    integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh" crossorigin="anonymous">
+    </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/contrib/auto-render.min.js"
+    integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);">
+    </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      renderMathInElement(document.body, {
+        delimiters: [
+          { left: '\\[', right: '\\]', display: true },   
+          { left: '$$', right: '$$', display: true },     
+          { left: '\\(', right: '\\)', display: false },  
+          { left: '$', right: '$', display: false },     
+        ],
+        throwOnError: false
+      });
+    });
+  </script>
+
+  
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const elements = document.getElementsByClassName('language-mermaid');
+      for (let i = 0; i < elements.length; i++) {
+        const element = elements[i];
+        const code = element.textContent;
+
+        
+        const tabContainer = document.createElement('div');
+        tabContainer.className = 'mermaid-tabs';
+
+        
+        const tabButtons = document.createElement('div');
+        tabButtons.className = 'mermaid-tab-buttons';
+
+        const diagramButton = document.createElement('button');
+        diagramButton.textContent = '图表';
+        diagramButton.className = 'mermaid-tab-button active';
+
+        const codeButton = document.createElement('button');
+        codeButton.textContent = '源码';
+        codeButton.className = 'mermaid-tab-button';
+
+        tabButtons.appendChild(diagramButton);
+        tabButtons.appendChild(codeButton);
+
+        
+        const diagramPanel = document.createElement('div');
+        diagramPanel.className = 'mermaid';
+        diagramPanel.textContent = code;
+
+        const codePanel = document.createElement('pre');
+        codePanel.className = 'mermaid-code';
+        codePanel.style.display = 'none';
+        codePanel.textContent = code;
+
+        
+        tabContainer.appendChild(tabButtons);
+        tabContainer.appendChild(diagramPanel);
+        tabContainer.appendChild(codePanel);
+
+        
+        element.parentNode.replaceChild(tabContainer, element);
+
+        
+        diagramButton.addEventListener('click', () => {
+          diagramPanel.style.display = 'block';
+          codePanel.style.display = 'none';
+          diagramButton.classList.add('active');
+          codeButton.classList.remove('active');
+        });
+
+        codeButton.addEventListener('click', () => {
+          diagramPanel.style.display = 'none';
+          codePanel.style.display = 'block';
+          diagramButton.classList.remove('active');
+          codeButton.classList.add('active');
+        });
+      }
+    });
+  </script>
+
+  <style>
+    .mermaid-tabs {
+      margin: 1em 0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    .mermaid-tab-buttons {
+      border-bottom: 1px solid #ddd;
+      padding: 8px;
+    }
+
+    .mermaid-tab-button {
+      background: none;
+      border: 1px solid transparent;
+      padding: 6px 12px;
+      cursor: pointer;
+      margin-right: 4px;
+      border-radius: 4px;
+    }
+
+    .mermaid-tab-button.active {
+      border-color: #ddd;
+      background: #f8f9fa;
+    }
+
+    .mermaid-code {
+      padding: 1em;
+      margin: 0;
+      background: #f8f9fa;
+    }
+  </style>
+
+</head>
+
+<body dir=" ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+<nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>Parafoil dynamics</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/background/" class="">背景：降落伞与翼伞</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/dynamic-models/" class="active">飞行动力学模型</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/systems/" class="">系统构成</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+<div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>飞行动力学模型</h3>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+
+<aside class="hidden clearfix">
+  
+
+<nav id="TableOfContents">
+  <ol>
+    <li><a href="#动力学模型的阶次">动力学模型的阶次</a></li>
+  </ol>
+</nav>
+
+
+
+</aside>
+
+ 
+      </header>
+
+      
+      
+<article class="markdown book-article"><h1 id="飞行动力学模型">
+  飞行动力学模型
+  <a class="anchor" href="#%e9%a3%9e%e8%a1%8c%e5%8a%a8%e5%8a%9b%e5%ad%a6%e6%a8%a1%e5%9e%8b">#</a>
+</h1>
+<h2 id="动力学模型的阶次">
+  动力学模型的阶次
+  <a class="anchor" href="#%e5%8a%a8%e5%8a%9b%e5%ad%a6%e6%a8%a1%e5%9e%8b%e7%9a%84%e9%98%b6%e6%ac%a1">#</a>
+</h2>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+<div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+
+<div class="book-comments">
+
+</div>
+
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+
+<nav id="TableOfContents">
+  <ol>
+    <li><a href="#动力学模型的阶次">动力学模型的阶次</a></li>
+  </ol>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
