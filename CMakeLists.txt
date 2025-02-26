@@ -36,11 +36,13 @@ set(COMMON_SOURCES
     ${PROJECT_SOURCE_DIR}/ode45.cpp
     ${PROJECT_SOURCE_DIR}/dynamicprogramming.cpp
     ${PROJECT_SOURCE_DIR}/parafoil.cpp
+    ${PROJECT_SOURCE_DIR}/nsgaii.cpp
 )
 
 # Define header files
 set(COMMON_HEADERS
     ${PROJECT_INCLUDE_DIR}/parafoil.hpp
+    ${PROJECT_INCLUDE_DIR}/nsgaii.hpp
 )
 
 # Parafoil executable
@@ -59,10 +61,10 @@ target_sources(de_demo
             ${COMMON_SOURCES}
 )
 
-# NSGA2 demo executable (commented out)
-# add_executable(nsga2_demo)
-# target_sources(nsga2_demo
-# 		PRIVATE
-# 			${PROJECT_SOURCE_DIR}/nsgii.cpp
-# 			${COMMON_SOURCES}
-# )
+# NSGA2 demo executable
+add_executable(nsga2_demo)
+target_sources(nsga2_demo
+        PRIVATE
+            ${PROJECT_SOURCE_DIR}/nsgaii_main.cpp
+            ${COMMON_SOURCES}
+)
