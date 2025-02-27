@@ -59,8 +59,20 @@ weight: 11
 
 ![X-38-parafoil](https://www.nasa.gov/wp-content/uploads/2023/03/355061main_EC01-0204-85_full.jpg "世界上最大的翼伞：X-38的降落")
 
-翼伞的早期是滑翔翼，与[花纸伞](#img-断桥借伞)一样，采用刚性支撑结构来维持形状，后来发展为利用被动充气来维持形状。
+翼伞的早期是滑翔翼，与[花纸伞](#img-断桥借伞)一样，采用刚性支撑结构来维持形状，后来发展为利用被动充气来维持形状。例如，[翼伞系统](#img-parafoil)由充气翼伞、伞绳和载荷组成[^2]。其中翼伞部分的伞衣有多个单元（[气室](#img-parafoil-cell)）组成，每个单元的迎风面开口，在运动过程中充气，形成一个完整的翼型结构。
 
-实际上，人工主动充气和密封的翼型结构被用于飞行，例如Siddhant Desai 和 Joseph A. Schetz[^1]给出了一个充气机翼的气动特性的定义，这个机翼采用Nylon 200D材料，充气压力为2.5 psi，也就是17.2 kPa。
+![parafoil](/imgs/3dmodel.png "翼伞的3D模型")
+
+![parafoil-cell](/imgs/parafoil-cell.png "翼伞的气室")
+
+翼伞想比较与降落伞，能够提高很好的滑翔能力，因此在应用中通常会采取高投放高开伞的策略，以利用滑翔能力提高投放距离，这在军事上具有重要意义。另外，翼伞可以通过拉紧伞绳来控制翼伞的飞行姿态，因此可以实现一定的机动能力。比如：
+
+- 左右两半的伞绳同时拉紧，可提供减速，实现落点和速度的控制；
+- 左右两半的伞绳形成拉紧的差动，可提供偏航力矩，实现航向的控制。
+
+才外，还可以在通过在载荷上安装动力装置，实现翼伞的机动飞行。
+
+除了被动充气的翼伞，人工主动充气和密封的翼型结构也被用于飞行，例如Siddhant Desai 和 Joseph A. Schetz[^1]给出了一个充气机翼的气动特性的定义，这个机翼采用Nylon 200D材料，充气压力为2.5 psi，也就是17.2 kPa。
 
 [^1]: DESAI S P, SCHETZ J A, ARIS A, 等. Wind Tunnel Experiments and Numerical Investigation of the Aerodynamics of an Inflated Wing[C]//AIAA SCITECH 2022 Forum. San Diego, CA & Virtual: American Institute of Aeronautics and Astronautics, 2022. DOI:10.2514/6.2022-0903.
+[^2]: 高兴龙, 陈钦, 张青斌, 等. 翼伞后缘偏转过程的流固耦合动力学特性[J]. 空气动力学学报, 2023, 41(5): 68-75.
