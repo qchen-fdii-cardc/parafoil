@@ -9,7 +9,7 @@ theme = 'hugo-book'
 
 [params]
   gitsite = 'https://github.com/qchen-fdii-cardc/parafoil/'
-  maxImgSize = 350
+  maxImgSize = 300
 
 # Needed for mermaid/katex shortcodes
 [markup]
