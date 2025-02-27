@@ -4,14 +4,18 @@ title = 'Parafoil Research Library'
 theme = 'hugo-book'
 
 # Book configuration
-disablePathToLower = false
-enableGitInfo = true
+# disablePathToLower = false
+#enableGitInfo = true
 
 [params]
   gitsite = 'https://github.com/qchen-fdii-cardc/parafoil/'
+  maxImgSize = 350
 
 # Needed for mermaid/katex shortcodes
 [markup]
+  [markup.highlight]
+  codeFences = true
+  lineNos = true
   [markup.goldmark]
     [markup.goldmark.parser]
         [markup.goldmark.parser.attribute]
