@@ -332,12 +332,9 @@ S10 --> [*]
 所以, 这里还有一个$\Delta T$的逐步减小的问题.
 
 
+[^1]: BONACCORSI G, QUADRELLI M B, BRAGHIN F. Dynamic Programming and Model Predictive Control Approach for Autonomous Landings[J]. Journal of Guidance, Control, and Dynamics, 2022, 45(11): 2164-2173. DOI:10.2514/1.G006667.
 
-
-
-[^1] BONACCORSI G, QUADRELLI M B, BRAGHIN F. Dynamic Programming and Model Predictive Control Approach for Autonomous Landings[J]. Journal of Guidance, Control, and Dynamics, 2022, 45(11): 2164-2173. DOI:10.2514/1.G006667.
-
-我们先来好好看看这个文献中的动态规划是怎么做的.
+我们先来好好看看这个文献[^1]中的动态规划是怎么做的.
 
 首先是动力学方程, 同样采用简化的三自由度模型, 边界条件和目标函数的定义:
 
