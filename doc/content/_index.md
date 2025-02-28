@@ -6,13 +6,14 @@ type: docs
 # 内容目录
 ## 简介（Introduction）
 
-- [背景：降落伞与翼伞](docs/background)
-- [系统构成](docs/systems)
+- [背景：降落伞与翼伞](docs/intro/background)
+- [系统构成](docs/intro/systems)
 
 
 ## 飞行动力学（Flight Dynamics）
 
-- [飞行动力学模型](docs/dynamic-models)
+- [飞行动力学模型](docs/dynamics/dynamic-models)
+- [空气动力学模型](docs/dynamics/aerodynamics)
 
 ## 制导、导航与控制（Guidance, Navigation and Control，GNC）
 
